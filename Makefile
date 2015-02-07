@@ -1,7 +1,7 @@
-clean: ; rm -rf my-virtualenv*
+clean: ; rm -rf dist
 
 clean-rpm: ; rm -rf rpm/SOURCES* && rm -rf rpm/BUILD*
 
-build-virtualenv: clean ; virtualenv --no-site-packages -p "${PYTHON}" my-virtualenv && my-virtualenv/bin/python setup.py install && virtualenv --relocatable my-virtualenv
+build-sdist: ; "${PYTHON}" setup.py sdist
 
-build-rpm: clean-rpm ; test -d rpm/BUILD || mkdir rpm/BUILD && cp -rp my-virtualenv/* rpm/BUILD && rpmbuild --define '_topdir '`pwd`/rpm --define 'VERSION '"${VERSION}" --define 'PYTHON_DEPENDENCY '"${PYTHON}" -ba `pwd`/rpm/SPECS/mymodule.spec
+build-rpm: clean-rpm ; test -d rpm/SOURCES || mkdir -p rpm/SOURCES && cp dist/*.tar.gz rpm/SOURCES && rpmbuild --define '_topdir '`pwd`/rpm --define 'VERSION '"${VERSION}" --define 'PYTHON_DEPENDENCY '"${PYTHON}" -ba `pwd`/rpm/SPECS/mymodule.spec
