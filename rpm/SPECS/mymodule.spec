@@ -16,9 +16,9 @@ Python package for mymodule
 %build
 
 %install
-mkdir -p $RPM_BUILD_ROOT/opt
-cp -rp $RPM_BUILD_DIR/* $RPM_BUILD_ROOT/opt
-find $RPM_BUILD_ROOT/opt -type f -perm /u+x,g+x -exec /usr/sbin/prelink -u {} \;
+mkdir -p $RPM_BUILD_ROOT/opt/%{name}
+cp -rp $RPM_BUILD_DIR/* $RPM_BUILD_ROOT/opt/%{name}
+find $RPM_BUILD_ROOT/opt/%{name} -type f -perm /u+x,g+x -exec /usr/sbin/prelink -u {} \;
 #chrpath -d $RPM_BUILD_ROOT/opt/pyenv/%{ENVNAME}/bin/uwsgi
 rm $RPM_BUILD_ROOT/opt/%{name}/lib64
 ln -sf /opt/%{name}/lib $RPM_BUILD_ROOT/opt/%{name}/lib64
